@@ -5,30 +5,37 @@ export class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
-  handleChange = e => {
+  handleNameChange = e => {
     this.setState({ name: e.currentTarget.value });
+  };
+
+  handleNumberChange = e => {
+    this.setState({ number: e.currentTarget.value });
   };
 
   handleSubmit = e => {
     e.preventDefault();
 
-    this.setState(({ contacts, name }) => {
+    this.setState(({ contacts, name, number }) => {
       const contact = {
         name,
         id: nanoid(),
+        number,
       };
 
       return {
         contacts: [contact, ...contacts],
         name: '',
+        number: '',
       };
     });
   };
 
   render() {
-    const { name, contacts } = this.state;
+    const { contacts, name, number } = this.state;
 
     return (
       <>
@@ -43,7 +50,19 @@ export class App extends Component {
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
               value={name}
-              onChange={this.handleChange}
+              onChange={this.handleNameChange}
+            />
+          </label>
+          <label>
+            Number
+            <input
+              type="tel"
+              name="number"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              required
+              value={number}
+              onChange={this.handleNumberChange}
             />
           </label>
           <button type="submit">Add contact</button>
@@ -51,8 +70,10 @@ export class App extends Component {
 
         <h2>Contacts</h2>
         <ul>
-          {contacts.map(({ name, id }) => (
-            <li key={id}>{name}</li>
+          {contacts.map(({ name, id, number }) => (
+            <li key={id}>
+              {name}: {number}
+            </li>
           ))}
         </ul>
       </>
