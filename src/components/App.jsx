@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { ContactForm } from 'components/ContactForm/ContactForm';
+import { ContactList } from 'components/ContactList/ContactList';
+import { Filter } from 'components/Filter/Filter';
 
 export class App extends Component {
   state = {
@@ -32,30 +34,13 @@ export class App extends Component {
     const filteredContacts = this.getFilteredContacts();
 
     return (
-      <>
+      <div>
         <h1>Phonebook</h1>
-
         <ContactForm onSubmit={this.formSubmitHandler} />
-
         <h2>Contacts</h2>
-        <label>
-          Find contacts by name
-          <input
-            type="text"
-            name="filter"
-            value={filter}
-            onChange={this.handleFilterChange}
-          />
-        </label>
-
-        <ul>
-          {filteredContacts.map(({ name, id, number }) => (
-            <li key={id}>
-              {name}: {number}
-            </li>
-          ))}
-        </ul>
-      </>
+        <Filter value={filter} onChange={this.handleFilterChange} />
+        <ContactList contacts={filteredContacts} />
+      </div>
     );
   }
 }
