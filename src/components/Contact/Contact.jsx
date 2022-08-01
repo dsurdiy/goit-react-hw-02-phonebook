@@ -1,12 +1,24 @@
 import PropTypes from 'prop-types';
+import { GrContactInfo } from 'react-icons/gr';
+import { BiPhone } from 'react-icons/bi';
+import { ContactInfo, DeleteBtn } from './Contact.styled';
 
 export const Contact = ({ id, name, number, onDeleteContact }) => {
   return (
     <>
-      {name}: {number}
-      <button type="button" onClick={() => onDeleteContact(id)}>
+      <ContactInfo>
+        <span>
+          <GrContactInfo />
+          {name}
+        </span>
+        <span>
+          <BiPhone />
+          {number}
+        </span>
+      </ContactInfo>
+      <DeleteBtn type="button" onClick={() => onDeleteContact(id)}>
         Delete
-      </button>
+      </DeleteBtn>
     </>
   );
 };

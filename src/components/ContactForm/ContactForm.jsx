@@ -1,5 +1,8 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
+import { IoMdContact } from 'react-icons/io';
+import { BsFillPhoneFill } from 'react-icons/bs';
+import { Form, FormInput, AddContactBtn } from './ContactForm.styled';
 
 export class ContactForm extends Component {
   state = {
@@ -41,10 +44,10 @@ export class ContactForm extends Component {
     const { name, number } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit}>
         <label>
-          Name
-          <input
+          <IoMdContact size={20} fill="tomato" /> Name
+          <FormInput
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -55,8 +58,8 @@ export class ContactForm extends Component {
           />
         </label>
         <label>
-          Number
-          <input
+          <BsFillPhoneFill size={18} fill="tomato" /> Number
+          <FormInput
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -66,8 +69,8 @@ export class ContactForm extends Component {
             onChange={this.handleChange}
           />
         </label>
-        <button type="submit">Add contact</button>
-      </form>
+        <AddContactBtn type="submit">Add contact</AddContactBtn>
+      </Form>
     );
   }
 }

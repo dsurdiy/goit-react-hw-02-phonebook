@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { ContactList } from 'components/ContactList/ContactList';
 import { Filter } from 'components/Filter/Filter';
+import { Container, AppTitle, ContactsTitle } from './App.styled';
+import { FcContacts } from 'react-icons/fc';
 
 export class App extends Component {
   state = {
@@ -51,16 +53,18 @@ export class App extends Component {
     const filteredContacts = this.getFilteredContacts();
 
     return (
-      <div>
-        <h1>Phonebook</h1>
+      <Container>
+        <AppTitle>
+          Phonebook <FcContacts size={30} />
+        </AppTitle>
         <ContactForm onSubmit={this.formSubmitHandler} />
-        <h2>Contacts</h2>
+        <ContactsTitle>Contacts</ContactsTitle>
         <Filter value={filter} onChange={this.handleFilterChange} />
         <ContactList
           contacts={filteredContacts}
           onDeleteContact={this.deleteContact}
         />
-      </div>
+      </Container>
     );
   }
 }
