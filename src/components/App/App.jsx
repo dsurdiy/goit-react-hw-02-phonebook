@@ -9,14 +9,25 @@ export class App extends Component {
     filter: '',
   };
 
-  handleFilterChange = e => {
-    this.setState({ filter: e.currentTarget.value });
+  formSubmitHandler = newContact => {
+    const { contacts } = this.state;
+    const normalizedNewContactsName = newContact.name.toLowerCase();
+
+    const existingСontact = contacts.find(
+      ({ name }) => name.toLowerCase() === normalizedNewContactsName
+    );
+
+    if (existingСontact) {
+      return alert(`${newContact.name} is already in contacts`);
+    }
+
+    this.setState(({ contacts }) => {
+      return { contacts: [newContact, ...contacts] };
+    });
   };
 
-  formSubmitHandler = newContact => {
-    this.setState(({ contacts }) => ({
-      contacts: [newContact, ...contacts],
-    }));
+  handleFilterChange = e => {
+    this.setState({ filter: e.currentTarget.value });
   };
 
   getFilteredContacts = () => {
@@ -29,6 +40,12 @@ export class App extends Component {
     );
   };
 
+  deleteContact = contactId => {
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(({ id }) => id !== contactId),
+    }));
+  };
+
   render() {
     const { filter } = this.state;
     const filteredContacts = this.getFilteredContacts();
@@ -39,7 +56,10 @@ export class App extends Component {
         <ContactForm onSubmit={this.formSubmitHandler} />
         <h2>Contacts</h2>
         <Filter value={filter} onChange={this.handleFilterChange} />
-        <ContactList contacts={filteredContacts} />
+        <ContactList
+          contacts={filteredContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
